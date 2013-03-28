@@ -25,7 +25,7 @@ values, and `#receive(msg)` method.
 
 Define `#subscribe_opts` to customize subscription options.
 
-Use `ack(msg)` to acknowledge message.
+Use `ack(msg)` to acknowledge message, if needed.
 
 Example:
 
@@ -44,12 +44,12 @@ class MyConsumer < StompActors::Consumer
   end
 
   def receive(msg)
-    # do something
+    # do something with msg
     ack(msg)
   end
 end
 
-MyConsumer.new # your actor is now subscribed and will process messages.
+MyConsumer.new # your actor is now subscribed and will receive messages.
 ```
 
 ### Producers
@@ -73,7 +73,7 @@ class MyProducer < StompActors::Producer
 end
 
 p = MyProducer.new
-p.emit("stuff") # message sent by actor
+p.emit("stuff") # message sent to queue
 ```
 
 ## Contributing
