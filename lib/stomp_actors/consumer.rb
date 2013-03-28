@@ -34,7 +34,7 @@ module StompActors
     end
 
     def unsubscribe
-      client.unsubscribe(@subscription_id)
+      client.unsubscribe(@subscription_id) if @subscription_id
     end
   end
 end
