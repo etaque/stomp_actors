@@ -6,7 +6,7 @@ module StompActors
     include Client
 
     def initialize
-      connect
+      async.connect
     end
 
     def emit(msg)

@@ -8,6 +8,10 @@ module StompActors
     attr_accessor :subscription_id
 
     def initialize
+      async.start
+    end
+
+    def start
       connect
       subscribe
     end
