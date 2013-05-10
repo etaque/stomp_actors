@@ -24,6 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'stomp_droid'
   spec.add_development_dependency 'pry'
   
-  spec.add_runtime_dependency 'celluloid', '~> 0.12'
+  spec.add_runtime_dependency 'celluloid', '~> 0.14'
   spec.add_runtime_dependency 'onstomp', '~> 1.0'
 end
