@@ -43,9 +43,12 @@ describe StompActors::Consumer do
     sleep 0.1
   end
 
-  it "should unsubscribe on finalize" do
+  it "should disconnect on termination" do
     consumer = MyConsumer.new(host, port, queue)
+    client = consumer.client
     sleep 0.1
-    consumer.finalize
+    consumer.terminate
+    sleep 0.1
+    expect(client.connected?).to be_false
   end
 end

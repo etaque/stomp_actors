@@ -7,6 +7,8 @@ module StompActors
 
     attr_accessor :subscription_id
 
+    finalizer :cleanup
+
     def initialize
       async.start
     end
@@ -32,7 +34,7 @@ module StompActors
       client.ack(msg)
     end
 
-    def finalize
+    def cleanup
       unsubscribe
       disconnect
     end

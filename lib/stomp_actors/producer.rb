@@ -5,6 +5,8 @@ module StompActors
 
     include Client
 
+    finalizer :disconnect
+
     def initialize
       async.connect
     end
@@ -13,9 +15,6 @@ module StompActors
       client.send(queue, msg)
     end
 
-    def finalize
-      disconnect
-    end
   end
 end
 
