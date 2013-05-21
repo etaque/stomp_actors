@@ -11,8 +11,8 @@ module StompActors
       async.connect
     end
 
-    def emit(msg)
-      client.send(queue, msg)
+    def emit(msg, opts = {})
+      client.send(queue, msg, opts)
     end
 
   end

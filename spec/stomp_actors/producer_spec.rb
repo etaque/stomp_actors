@@ -32,5 +32,14 @@ describe StompActors::Producer do
       sleep 0.5
     }.to change { Dir["#{message_dir}/*.msg"].to_a.length }.by(1)
   end
+
+  it "should send message with options" do
+    producer = MyProducer.new
+    expect {
+      producer.emit("message", persistent: true)
+      sleep 0.5
+    }.to change { Dir["#{message_dir}/*.msg"].to_a.length }.by(1)
+  end
+
 end
 
