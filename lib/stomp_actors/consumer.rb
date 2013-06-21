@@ -21,7 +21,7 @@ module StompActors
     def subscribe
       me = current_actor
 
-      @subscription_id = client.subscribe(queue, subscribe_opts) do |msg|
+      client.subscribe(queue, subscribe_opts) do |msg|
         me.receive(msg)
       end
     end
@@ -31,7 +31,7 @@ module StompActors
     end
 
     def ack(msg)
-      client.ack(msg)
+      client.acknowledge(msg)
     end
 
     def cleanup
@@ -40,7 +40,7 @@ module StompActors
     end
 
     def unsubscribe
-      client.unsubscribe(@subscription_id) if @subscription_id
+      client.unsubscribe(queue)
     end
   end
 end

@@ -1,3 +1,5 @@
+require 'stomp'
+
 require "stomp_actors/version"
 require "stomp_actors/client"
 require "stomp_actors/producer"

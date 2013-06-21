@@ -17,8 +17,10 @@ describe StompActors::Consumer do
         super()
       end
 
-      def uri
-        "stomp://#{@host}:#{@port}"
+      def connect_opts
+        {
+          hosts: [{ host: @host, port: @port}]
+        }
       end
 
       def receive(msg)
@@ -29,6 +31,9 @@ describe StompActors::Consumer do
       def do_something; end
     end
 
+    Celluloid.shutdown
+    Celluloid.boot
+    
     @server_thread = StompDroid::Server.start(host, port, queue_name: queue, message: msg)
     sleep 0.1 # let start
   end
@@ -49,6 +54,6 @@ describe StompActors::Consumer do
     sleep 0.1
     consumer.terminate
     sleep 0.1
-    expect(client.connected?).to be_false
+    expect(client.open?).to be_false
   end
 end

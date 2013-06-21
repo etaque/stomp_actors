@@ -12,7 +12,7 @@ module StompActors
     end
 
     def emit(msg, opts = {})
-      client.send(queue, msg, opts)
+      client.publish(queue, msg, opts)
     end
 
   end

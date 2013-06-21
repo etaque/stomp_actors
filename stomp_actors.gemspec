@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Emilien Taque"]
   spec.email         = ["e.taque@alphalink.fr"]
   spec.description   = %q{Celluloid actors for Stomp}
-  spec.summary       = %q{Build Stomp consumers and publishers with Celluloid actors framework and OnStomp lib.}
+  spec.summary       = %q{Build Stomp consumers and publishers with Celluloid actors framework and stomp lib.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry'
   
   spec.add_runtime_dependency 'celluloid', '~> 0.14'
-  spec.add_runtime_dependency 'onstomp', '~> 1.0'
+  spec.add_runtime_dependency 'stomp', '~> 1.2.9'
 end

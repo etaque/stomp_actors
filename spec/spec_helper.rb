@@ -2,7 +2,7 @@ require 'bundler'
 
 require 'celluloid'
 require 'stomp_droid'
-require 'onstomp'
+require 'stomp'
 require 'pry'
 
 require 'stomp_actors'

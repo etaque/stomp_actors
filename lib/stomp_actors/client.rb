@@ -16,34 +16,12 @@ module StompActors
     end
 
     def connect
-      @client = OnStomp.open(uri)
-
-      me = current_actor
-
-      @client.on_connection_closed do |_, _, msg|
-        me.async.connection_closed(msg)
-      end
-
-      @client.on_error do |e, *_|
-        me.async.broker_error(e)
-      end
-    end
-
-    def connection_closed(msg)
-      unless @disconnecting
-        error "Connection closed: #{msg}" if respond_to?(:error)
-        raise DisconnectionError.new(msg)
-      end
-    end
-
-    def broker_error(e)
-      error("Broker error: #{e.inspect}") if respond_to?(:error)
-      raise BrokerError.new(e[:message])
+      @client = Stomp::Client.new(connect_opts)
     end
 
     def disconnect
       @disconnecting = true
-      @client.disconnect if @client && @client.connected?
+      @client.close if @client && @client.open?
     end
 
   end
