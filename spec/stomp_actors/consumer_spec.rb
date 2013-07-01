@@ -1,5 +1,29 @@
 require 'spec_helper'
 
+class MyConsumer < StompActors::Consumer
+  attr_reader :queue
+
+  def initialize(host, port, queue)
+    @host = host
+    @port = port
+    @queue = queue
+    super()
+  end
+
+  def connect_opts
+    {
+      hosts: [{ host: @host, port: @port}]
+    }
+  end
+
+  def receive(msg)
+    do_something
+    ack(msg)
+  end
+
+  def do_something; end
+end
+
 describe StompActors::Consumer do
   let(:host) { '127.0.0.1' }
   let(:port) { 61623 }
@@ -7,33 +31,6 @@ describe StompActors::Consumer do
   let(:msg) { "something" }
 
   before do
-    class MyConsumer < StompActors::Consumer
-      attr_reader :queue
-
-      def initialize(host, port, queue)
-        @host = host
-        @port = port
-        @queue = queue
-        super()
-      end
-
-      def connect_opts
-        {
-          hosts: [{ host: @host, port: @port}]
-        }
-      end
-
-      def receive(msg)
-        do_something
-        ack(msg)
-      end
-
-      def do_something; end
-    end
-
-    Celluloid.shutdown
-    Celluloid.boot
-    
     @server_thread = StompDroid::Server.start(host, port, queue_name: queue, message: msg)
     sleep 0.1 # let start
   end

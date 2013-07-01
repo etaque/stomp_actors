@@ -12,6 +12,8 @@ Celluloid.logger = Logger.new(logfile)
 
 RSpec.configure do |config|
   config.before :each do
+    Celluloid.shutdown
+    Celluloid.boot
   end
 end
 

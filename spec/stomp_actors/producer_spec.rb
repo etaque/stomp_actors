@@ -1,5 +1,14 @@
 require 'spec_helper'
 
+class MyProducer < StompActors::Producer
+  def connect_opts
+    { hosts: [{ host: "127.0.0.1", port: 61623 }] }
+  end
+  def queue
+    '/queue/foo'
+  end
+end
+
 describe StompActors::Producer do
   let(:host) { '127.0.0.1' }
   let(:port) { 61623 }
@@ -7,18 +16,6 @@ describe StompActors::Producer do
   let(:message_dir) { 'tmp/messages' }
 
   before do
-    class MyProducer < StompActors::Producer
-      def connect_opts
-        { hosts: [{ host: "127.0.0.1", port: 61623 }] }
-      end
-      def queue
-        '/queue/foo'
-      end
-    end
-
-    Celluloid.shutdown
-    Celluloid.boot
-    
     @server_thread = StompDroid::Server.start(host, port, queue_name: queue, sent_message_dir: message_dir)
     sleep 0.1 # let start
   end

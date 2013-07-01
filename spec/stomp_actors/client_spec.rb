@@ -1,25 +1,21 @@
 require 'spec_helper'
 
+class MyActor
+  include Celluloid
+  include StompActors::Client
+
+  def connect_opts
+    {
+      hosts: [{ host: '127.0.0.1', port: 61623 }]
+    }
+  end
+end
+
 describe StompActors::Client do
   let(:host) { '127.0.0.1' }
   let(:port) { 61623 }
 
   before do
-
-    class MyActor
-      include Celluloid
-      include StompActors::Client
-
-      def connect_opts
-        {
-          hosts: [{ host: '127.0.0.1', port: 61623 }]
-        }
-      end
-    end
-
-    Celluloid.shutdown
-    Celluloid.boot
-
     @server_thread = StompDroid::Server.start(host, port)
     sleep 0.1 # let start
   end

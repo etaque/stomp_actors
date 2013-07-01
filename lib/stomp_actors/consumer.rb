@@ -40,7 +40,7 @@ module StompActors
     end
 
     def unsubscribe
-      client.unsubscribe(queue)
+      client.unsubscribe(queue) if client && client.open?
     end
   end
 end
