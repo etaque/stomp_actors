@@ -1,6 +1,6 @@
 # StompActors
 
-A suite of Celluloid actors to interact with Stomp protocol, using OnStomp gem.
+A suite of Celluloid actors to consume and produce to queues with Stomp protocol.
 
 ## Installation
 
@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ### Consumers
 
-Inherit from `StompActors::Consumer` then define `#queue` and `#uri`
+Inherit from `StompActors::Consumer` then define `#queue` and `#connect_opts`
 values, and `#receive(msg)` method.
 
 Define `#subscribe_opts` to customize subscription options.
@@ -31,8 +31,12 @@ Example:
 
 ```ruby
 class MyConsumer < StompActors::Consumer
-  def uri
-    "stomp://127.0.0.1:61613"
+  def connect_opts
+    # stomp gem hash login, see:
+    # https://github.com/stompgem/stomp#hash-login-example-usage-this-is-the-recommended-login-technique
+    {
+      hosts: [{ host: "127.0.0.1", port: 61613}]
+    }
   end
 
   def queue
@@ -54,7 +58,7 @@ MyConsumer.new # your actor is now subscribed and will receive messages.
 
 ### Producers
 
-Inherit from `StompActors::Producer` then define `#queue` and `#uri`
+Inherit from `StompActors::Producer` then define `#queue` and `#connect_opts`
 values.
 
 Use `emit(msg)` to send message to the defined queue.
@@ -63,8 +67,10 @@ Example:
 
 ```ruby
 class MyProducer < StompActors::Producer
-  def uri
-    "stomp://127.0.0.1:61613"
+  def connect_opts
+    {
+      hosts: [{ host: "127.0.0.1", port: 61613}]
+    }
   end
 
   def queue
